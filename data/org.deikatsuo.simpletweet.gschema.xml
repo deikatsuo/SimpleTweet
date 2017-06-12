@@ -1,0 +1,43 @@
+<schemalist>
+	<schema id="org.deikatsuo.simpletweet" path="/org/deikatsuo/simpletweet/" gettext-domain="simpletweet">
+
+		<key name="greeting" type="b">
+			<default>true</default>
+			<summary>Menyapa</summary>
+			<description>
+				Pertama kali membuka SimpleTweet.
+			</description>
+		</key>
+
+		<key name="consumer" type="a{ss}">
+			<default>
+				{
+					'key':'bBOoFJDcJTceZy88fKHJcMnZh',
+					'secret':'It3xhlH2L46PcchsV4MAIeSlN46ajJI03RbO26wfbXQ75rm6bF'
+				}
+			</default>
+			<summary>Kode rahasia SimpleTweet app</summary>
+			<description>
+				Dafuqq.. mentang2 opensource, kodenya dilelang bebas. \n
+				Dari twitternya udah dikasih tau katanya "jangan sampai kode ini diketahui orang lain".
+			</description>
+		</key>
+		
+		<key name="active-user" type="s">
+			<default>""</default>
+			<summary>User saat ini</summary>
+			<description>
+				Otomatis login saat SimpleTweet dijalankan.
+			</description>
+		</key>
+		
+		<key name="token" type="a{sa{ss}}">
+			<default>{}</default>
+			<summary>Token rahasia</summary>
+			<description>
+				Token rahasia,
+			</description>
+		</key>
+
+	</schema>
+</schemalist>

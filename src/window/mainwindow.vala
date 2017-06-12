@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
- namespace StWindow {
- 	[GtkTemplate (ui = "/app/deikatsuo/simpletweet/ui/mainwindow.ui")]
+namespace StWindow {
+	[GtkTemplate (ui = "/org/deikatsuo/simpletweet/ui/mainwindow.ui")]
  	public class MainWindow:Gtk.ApplicationWindow {
  		[GtkChild]
  		private Gtk.HeaderBar HeaderBar;
@@ -25,13 +25,8 @@
  		private Gtk.TextView TextView;
  		
  		public MainWindow(St.SimpleTweet app) {
- 			St.VaTweet api=new St.VaTweet();
- 			api.st_api();
-			HeaderBar.title="dafuqq";
-			
-			
-			Gtk.test_text_set(TextView, api.msg+api.token);
+ 			
 			this.destroy.connect (Gtk.main_quit);
  		}
  	}
- }
+}

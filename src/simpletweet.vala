@@ -17,12 +17,12 @@
  */
  
 namespace St {
-	public static StWindow.MainWindow window;
+	public static Gtk.ApplicationWindow window;
  	public class SimpleTweet:Gtk.Application {
  		protected override void activate() {
-			window = new StWindow.MainWindow(this);
+			window = new StWindow.GreetingWindow(this);
 			
-			window.show_all ();
+			window.show ();
 		}
  	}
 }

@@ -3,6 +3,7 @@ sources = [
 	'simpletweet.vala',
 	'vatweet.vala',
 	'window/mainwindow.vala',
+	'window/greetingwindow.vala',
 ]
 
 deps = [
@@ -19,4 +20,5 @@ executable(
 	vala_args: [
 		'--target-glib=2.52',
 	],
+	install: true,
 )
