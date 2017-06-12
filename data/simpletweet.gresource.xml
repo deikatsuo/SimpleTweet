@@ -1,0 +1,5 @@
+<gresources>
+  <gresource prefix="/app/deikatsuo/simpletweet">
+    <file>ui/simpletweet.ui</file>
+  </gresource>
+</gresources>
