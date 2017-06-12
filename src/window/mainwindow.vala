@@ -17,12 +17,21 @@
  */
  
  namespace StWindow {
+ 	[GtkTemplate (ui = "/app/deikatsuo/simpletweet/ui/mainwindow.ui")]
  	public class MainWindow:Gtk.ApplicationWindow {
+ 		[GtkChild]
+ 		private Gtk.HeaderBar HeaderBar;
+ 		[GtkChild]
+ 		private Gtk.TextView TextView;
+ 		
  		public MainWindow(St.SimpleTweet app) {
- 			var window=new Gtk.Window();
-			window.title = "santai";
-			window.set_default_size (200, 200);
-			window.destroy.connect (Gtk.main_quit);
+ 			St.VaTweet api=new St.VaTweet();
+ 			api.st_api();
+			HeaderBar.title="dafuqq";
+			
+			
+			Gtk.test_text_set(TextView, api.msg+api.token);
+			this.destroy.connect (Gtk.main_quit);
  		}
  	}
  }

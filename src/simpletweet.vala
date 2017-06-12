@@ -21,7 +21,7 @@ namespace St {
  	public class SimpleTweet:Gtk.Application {
  		protected override void activate() {
 			window = new StWindow.MainWindow(this);
-
+			
 			window.show_all ();
 		}
  	}
