@@ -10,7 +10,7 @@ Twitter native client for gnome
 - meson
 - ninja
 
-$meson build && cd build
-$ninja install
+>$meson build && cd build <br>
+>$ninja install
 
 Run SimpleTweet with 'simpletweet' command
