@@ -1,5 +1,6 @@
 <gresources>
   <gresource prefix="/org/deikatsuo/simpletweet">
+  	<file>ui/alertwindow.ui</file>
     <file>ui/mainwindow.ui</file>
     <file>ui/greetingwindow.ui</file>
   </gresource>

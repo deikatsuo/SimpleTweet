@@ -24,8 +24,6 @@ namespace StWindow {
 		[GtkChild]
 		private Gtk.Spinner Loading;
 		[GtkChild]
-		private Gtk.Button CancelButton;
-		[GtkChild]
 		private Gtk.Button ResetButton;
 		[GtkChild]
 		private Gtk.Button RequestTokenButton;
@@ -34,6 +32,8 @@ namespace StWindow {
 		[GtkChild]
 		private Gtk.Button ConnectButton;
 		
+		private St.VaTweet tweet;
+		
 		public GreetingWindow(St.SimpleTweet app) {
 			
 			this.destroy.connect (Gtk.main_quit);
@@ -41,23 +41,54 @@ namespace StWindow {
 		
 		[GtkCallback]
 		private void RequestTokenButton_clicked_cb() {
-			RequestTokenButton.visible = false;
-			Loading.visible = true;
+			RequestTokenButton.hide();
+			Loading.show();
 			Loading.active = true;
 			
-			St.VaTweet tweet = new St.VaTweet();
+			tweet = new St.VaTweet();
 			if(tweet.request_token()) {
-				Loading.visible = false;
+				Loading.hide();
 				Loading.active = false;
 				
-				GLib.TimeVal time = GLib.TimeVal();
-				//Gtk.show_uri_on_window(this, tweet.get_token_link(), ));
+				try {
+      				GLib.AppInfo.launch_default_for_uri (tweet.get_token_url(), null);
+    			} catch (GLib.Error e) {
+      				new Alert(e.message, {"Alert!"});
+    			}
 				
-				RequestPinEntry.text = time.get_current_time();
-				RequestPinEntry.visible = true;
-				ConnectButton.visible = true;
-			} 
-			
+				RequestPinEntry.show();
+				ConnectButton.show();
+			}
+		}
+		
+		private void reset() {
+			Loading.hide();
+			RequestPinEntry.hide();
+			ConnectButton.hide();
+			RequestTokenButton.show();
+		}
+		
+		[GtkCallback]
+		private void ConnectButton_clicked_cb() {
+			RequestPinEntry.hide();
+			ConnectButton.hide();
+			Loading.show();
+			Loading.active = true;
+			if (tweet.access_token(RequestPinEntry.text)) {
+				Loading.active = false;
+				Loading.hide();
+				
+				string msg = "token: "+tweet.get_token()+"\n";
+				msg = msg+"token secret: "+tweet.get_token_secret();
+				new Alert(msg, {"Alert!"});
+				
+				reset();
+			}
+		}
+		
+		[GtkCallback]
+		private void ResetButton_clicked_cb() {
+			reset();
 		}
 	}
 }

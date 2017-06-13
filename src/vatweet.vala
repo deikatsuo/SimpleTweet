@@ -19,9 +19,16 @@
 namespace St {
 	public class VaTweet:GLib.Object {
 		private Rest.OAuthProxy api;
-		private string token="token";
+		private string token="";
+		private string token_secret="";
 		private string error="?";
-		private string req_token_link="";
+		private string req_token_url="";
+		
+		/*
+		 * Request token
+		 * @return bool
+		 *
+		 */
 		public bool request_token() {
 			api = new Rest.OAuthProxy (
 				"bBOoFJDcJTceZy88fKHJcMnZh",
@@ -37,12 +44,35 @@ namespace St {
 			}
 			
 			token = api.get_token ();
-			req_token_link = "http://twitter.com/oauth/authorize?oauth_token="+token;
+			req_token_url = "http://twitter.com/oauth/authorize?oauth_token="+token;
 			return true;
 		}
-		public string get_token_link() {
-			return req_token_link;
+		
+		/*
+		 * Token url
+		 * @return token url
+		 */
+		public string get_token_url() {
+			return req_token_url;
 		}
-
+		
+		public bool access_token(string pin) {
+			try {
+				api.access_token ("oauth/access_token", pin);
+				token_secret = api.get_token_secret();
+			} catch (Error e) {
+				new Alert(e.message, {"Ooops"});
+				return false;
+			}
+			return true;
+		}
+		
+		public string get_token() {
+			return token;
+		}
+		
+		public string get_token_secret() {
+			return token_secret;
+		}
 	}
 }

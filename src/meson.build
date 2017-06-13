@@ -2,6 +2,8 @@ sources = [
 	'main.vala',
 	'simpletweet.vala',
 	'vatweet.vala',
+	'alert.vala',
+	'window/alertwindow.vala',
 	'window/mainwindow.vala',
 	'window/greetingwindow.vala',
 ]
@@ -14,8 +16,8 @@ deps = [
 
 executable(
 	'simpletweet',
-	resources,
 	sources,
+	resources,
 	dependencies: deps,
 	vala_args: [
 		'--target-glib=2.52',

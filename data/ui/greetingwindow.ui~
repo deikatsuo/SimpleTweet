@@ -4,6 +4,7 @@
   <requires lib="gtk+" version="3.20"/>
   <template class="StWindowGreetingWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
+    <property name="window_position">center</property>
     <property name="default_width">500</property>
     <property name="default_height">250</property>
     <child>
@@ -20,6 +21,19 @@
             <property name="valign">center</property>
             <property name="orientation">vertical</property>
             <child>
+              <object class="GtkSpinner" id="Loading">
+                <property name="width_request">50</property>
+                <property name="height_request">50</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">10</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="RequestTokenButton">
                 <property name="label" translatable="yes">Dapatkan Token</property>
                 <property name="visible">True</property>
@@ -30,18 +44,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">https://twitter.com</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
+                <property name="padding">10</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -50,10 +53,12 @@
                 <property name="can_focus">True</property>
                 <property name="invisible_char">+</property>
                 <property name="placeholder_text" translatable="yes">Paste Pin Disini</property>
+                <property name="input_purpose">digits</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
+                <property name="padding">10</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -62,6 +67,7 @@
                 <property name="label" translatable="yes">Hubungkan Twitter</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="ConnectButton_clicked_cb" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -74,20 +80,8 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
+            <property name="padding">2</property>
             <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkProgressBar" id="Loading">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="show_text">True</property>
-            <property name="ellipsize">end</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
           </packing>
         </child>
       </object>
@@ -98,22 +92,14 @@
         <property name="can_focus">False</property>
         <property name="show_close_button">True</property>
         <child>
-          <object class="GtkButton" id="CancelButton">
-            <property name="label" translatable="yes">Mundur</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-        </child>
-        <child>
           <object class="GtkButton" id="ResetButton">
             <property name="label" translatable="yes">Reset</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <signal name="clicked" handler="ResetButton_clicked_cb" swapped="no"/>
           </object>
           <packing>
-            <property name="pack_type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
