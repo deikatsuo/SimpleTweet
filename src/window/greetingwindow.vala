@@ -64,6 +64,7 @@ namespace StWindow {
 		private void reset() {
 			Loading.hide();
 			RequestPinEntry.hide();
+			RequestPinEntry.text = "";
 			ConnectButton.hide();
 			RequestTokenButton.show();
 		}

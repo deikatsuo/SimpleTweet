@@ -27,6 +27,7 @@ namespace StWindow {
  		private Gtk.Label AlertMessage;
  		
  		public AlertWindow(string msg) {
+ 			HeaderBar.title = "Alert !";
  			AlertMessage.label = msg;
  		}
  		

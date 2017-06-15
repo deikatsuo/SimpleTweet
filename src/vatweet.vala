@@ -26,8 +26,7 @@ namespace St {
 		
 		/*
 		 * Request token
-		 * @return bool
-		 *
+		 * @return boolean
 		 */
 		public bool request_token() {
 			api = new Rest.OAuthProxy (
@@ -56,6 +55,11 @@ namespace St {
 			return req_token_url;
 		}
 		
+		/*
+		 * Request pin
+		 * @param pin
+		 * @return boolean
+		 */
 		public bool access_token(string pin) {
 			try {
 				api.access_token ("oauth/access_token", pin);

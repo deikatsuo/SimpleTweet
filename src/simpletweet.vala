@@ -20,7 +20,11 @@ namespace St {
 	public static Gtk.ApplicationWindow window;
  	public class SimpleTweet:Gtk.Application {
  		protected override void activate() {
-			window = new StWindow.GreetingWindow(this);
+			//window = new StWindow.GreetingWindow(this);
+			window = new StWindow.MainWindow(this);
+			St.Schema schema = new St.Schema();
+			
+			print(schema.get_token_secret(schema.get_active_user()));
 			
 			window.show ();
 		}

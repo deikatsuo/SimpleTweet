@@ -17,13 +17,12 @@
  */
 
 public class Alert:GLib.Object {
+
 	public Alert(string msg, string[]? title) {
-		
 		StWindow.AlertWindow alert = new StWindow.AlertWindow(msg);
-		if (title != null) {
+		if (title[0] != null) {
 			alert.title(title);
 		}
-			
 		alert.show_all();
 	}
 }
