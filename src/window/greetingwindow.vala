@@ -81,7 +81,9 @@ namespace StWindow {
 				
 				string msg = "token: "+tweet.get_token()+"\n";
 				msg = msg+"token secret: "+tweet.get_token_secret();
-				new Alert(msg, {"Alert!"});
+				
+				St.Schema save = new St.Schema();
+				save.set_token("dafuq",{tweet.get_token(), tweet.get_token_secret()});
 				
 				reset();
 			}

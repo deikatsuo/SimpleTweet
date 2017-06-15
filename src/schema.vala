@@ -80,7 +80,49 @@ namespace St {
 		 * @return boolean
 		 */
 		public bool is_first_time() {
-			return data.get_boolean("greeting");
+			bool greeting = data.get_boolean("greeting");
+			if (greeting) {
+				data.set_boolean("greeting", false);
+			}
+			return greeting;
+		}
+		
+		/*
+		 * Set active user
+		 * @param string user
+		 * @return boolean
+		 */
+		public bool set_active_user(string user) {
+			return data.set_string("active-user", user);
+		}
+		
+		/*
+		 * Set consumer api
+		 * @param string, api consumer key
+		 * @param string, api consumer secret
+		 * @return boolean
+		 */
+		public bool set_consumer(string key, string secret) {
+			GLib.VariantBuilder consumer = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
+			consumer.add("{ss}", "key", key);
+			consumer.add("{ss}", "secret", secret);
+			GLib.Variant new_consumer = consumer.end();
+			return data.set_value("consumer", new_consumer);
+		}
+		
+		public bool set_token(string user, string[] utoken) {
+			GLib.VariantBuilder new_token = new GLib.VariantBuilder(new GLib.VariantType("a{sa{ss}}"));
+			
+			GLib.VariantBuilder ntc = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
+			ntc.add("{ss}", "key", utoken[0]);
+			ntc.add("{ss}", "secret", utoken[1]);
+			
+			new_token.add("{sa{ss}}", user, ntc);
+			
+			GLib.Variant new_token_result = new_token.end();
+			print(new_token_result.print(true));
+			
+			return data.set_value("token", new_token_result);
 		}
 	}
 }
