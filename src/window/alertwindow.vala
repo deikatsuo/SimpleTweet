@@ -26,14 +26,18 @@ namespace StWindow {
  		[GtkChild]
  		private Gtk.Label AlertMessage;
  		
+ 		/*
+ 		 * Constructor
+ 		 * @param string, message to show on alert window
+ 		 */
  		public AlertWindow(string msg) {
  			HeaderBar.title = "Alert !";
  			AlertMessage.label = msg;
  		}
  		
  		/*
- 		 * Mengubah title dan subtitle pada alert window
- 		 * @param array[] - {title,subtitle}
+ 		 * Set tittle - subtitle
+ 		 * @param string[], { title, subtitle }
  		 */
  		public void title(string[] s) {
  			HeaderBar.title = s[0];

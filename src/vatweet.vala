@@ -71,10 +71,18 @@ namespace St {
 			return true;
 		}
 		
+		/*
+		 * Get the token
+		 * @return string, token
+		 */
 		public string get_token() {
 			return token;
 		}
 		
+		/*
+		 * Get token secret
+		 * @return string, token secret
+		 */
 		public string get_token_secret() {
 			return token_secret;
 		}

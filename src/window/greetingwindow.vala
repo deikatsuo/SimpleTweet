@@ -34,6 +34,10 @@ namespace StWindow {
 		
 		private St.VaTweet tweet;
 		
+		/*
+		 * Constructor
+		 * @param Object St.SimpleTweet
+		 */
 		public GreetingWindow(St.SimpleTweet app) {
 			
 			this.destroy.connect (Gtk.main_quit);
@@ -61,6 +65,9 @@ namespace StWindow {
 			}
 		}
 		
+		/*
+		 * Reset window
+		 */
 		private void reset() {
 			Loading.hide();
 			RequestPinEntry.hide();
@@ -78,15 +85,11 @@ namespace StWindow {
 			if (tweet.access_token(RequestPinEntry.text)) {
 				Loading.active = false;
 				Loading.hide();
-				
-				string msg = "token: "+tweet.get_token()+"\n";
-				msg = msg+"token secret: "+tweet.get_token_secret();
-				
+
 				St.Schema save = new St.Schema();
 				save.set_token("dafuq",{tweet.get_token(), tweet.get_token_secret()});
-				
-				reset();
 			}
+			reset();
 		}
 		
 		[GtkCallback]
