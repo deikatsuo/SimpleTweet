@@ -111,18 +111,77 @@ namespace St {
 		}
 		
 		public bool set_token(string user, string[] utoken) {
-			GLib.VariantBuilder new_token = new GLib.VariantBuilder(new GLib.VariantType("a{sa{ss}}"));
+			GLib.VariantBuilder set_new_token = new GLib.VariantBuilder(new GLib.VariantType("a{sa{ss}}"));
+			bool update = false;
 			
-			GLib.VariantBuilder ntc = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
-			ntc.add("{ss}", "key", utoken[0]);
-			ntc.add("{ss}", "secret", utoken[1]);
+			GLib.Variant old_token = token;
+			var old_token_iter = old_token.iterator();
+			string? old_user = null;
+			string? old_token_token = null;
+			string? old_token_secret = null;
+			while (old_token_iter.next("{sa{ss}}", &old_user)) {
+				GLib.VariantBuilder tmp = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
+				
+				if (old_user != user) {
+					old_token_token = get_token(old_user);
+					old_token_secret = get_token_secret(old_user);
+					tmp.add("{ss}", "token", old_token_token);
+					tmp.add("{ss}", "token_secret", old_token_secret);
+					set_new_token.add("{sa{ss}}", old_user, tmp);
+				}
+				else {
+					update = true;
+					tmp.add("{ss}", "token", utoken[0]);
+					tmp.add("{ss}", "token_secret", utoken[1]);
+					set_new_token.add("{sa{ss}}", old_user, tmp);
+				}
+			}
 			
-			new_token.add("{sa{ss}}", user, ntc);
+			if(!update) {
+				GLib.VariantBuilder user_key_secret = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
+				user_key_secret.add("{ss}", "token", utoken[0]);
+				user_key_secret.add("{ss}", "token_secret", utoken[1]);
 			
-			GLib.Variant new_token_result = new_token.end();
-			print(new_token_result.print(true));
+				set_new_token.add("{sa{ss}}", user, user_key_secret);
+			}
+			
+			GLib.Variant new_token_result = set_new_token.end();
 			
 			return data.set_value("token", new_token_result);
+		}
+		
+		/*
+		 * Delete user from GSetting
+		 * @param string, user to delete
+		 * @return boolean
+		 */
+		public bool delete_user(string user) {
+			bool deleted = false;
+			GLib.VariantBuilder set_new_token = new GLib.VariantBuilder(new GLib.VariantType("a{sa{ss}}"));
+			GLib.Variant old_token = token;
+			var old_token_iter = old_token.iterator();
+			string? old_user = null;
+			string? old_token_token = null;
+			string? old_token_secret = null;
+			while (old_token_iter.next("{sa{ss}}", &old_user)) {
+				GLib.VariantBuilder tmp = new GLib.VariantBuilder(new GLib.VariantType("a{ss}"));
+				
+				if (old_user != user) {
+					old_token_token = get_token(old_user);
+					old_token_secret = get_token_secret(old_user);
+					tmp.add("{ss}", "token", old_token_token);
+					tmp.add("{ss}", "token_secret", old_token_secret);
+					set_new_token.add("{sa{ss}}", old_user, tmp);
+				}
+				else {
+					deleted = true;
+				}
+			}
+			GLib.Variant new_token_result = set_new_token.end();
+			
+			return data.set_value("token", new_token_result);
+			
+			return deleted;
 		}
 	}
 }
