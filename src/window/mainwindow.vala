@@ -22,9 +22,13 @@ namespace StWindow {
  		[GtkChild]
  		private Gtk.HeaderBar HeaderBar;
  		[GtkChild]
- 		private Gtk.TextView TextView;
+ 		private Gtk.Revealer NotificationRevealer;
  		
- 		public MainWindow(St.SimpleTweet app) {
+ 		private St.SimpleTweet simpletweet;
+ 		public string user;
+ 		
+ 		public MainWindow(St.SimpleTweet simpletweet, string? user) {
+ 			this.simpletweet = simpletweet;
  			
 			this.destroy.connect (Gtk.main_quit);
  		}

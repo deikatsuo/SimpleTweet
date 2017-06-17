@@ -20,11 +20,7 @@ namespace StWindow {
 	[GtkTemplate (ui = "/org/deikatsuo/simpletweet/ui/greetingwindow.ui")]
 	public class GreetingWindow:Gtk.ApplicationWindow {
 		[GtkChild]
-		private Gtk.HeaderBar HeaderBar;
-		[GtkChild]
 		private Gtk.Spinner Loading;
-		[GtkChild]
-		private Gtk.Button ResetButton;
 		[GtkChild]
 		private Gtk.Button RequestTokenButton;
 		[GtkChild]
@@ -33,14 +29,14 @@ namespace StWindow {
 		private Gtk.Button ConnectButton;
 		
 		private St.VaTweet tweet;
+		private St.SimpleTweet app;
 		
 		/*
 		 * Constructor
 		 * @param Object St.SimpleTweet
 		 */
 		public GreetingWindow(St.SimpleTweet app) {
-			
-			this.destroy.connect (Gtk.main_quit);
+			this.app = app;
 		}
 		
 		[GtkCallback]

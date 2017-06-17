@@ -1,5 +1,6 @@
 sources = [
 	'main.vala',
+	'account.vala',
 	'simpletweet.vala',
 	'vatweet.vala',
 	'alert.vala',

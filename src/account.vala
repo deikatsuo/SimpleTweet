@@ -1,4 +1,4 @@
-/* user.vala
+/* account.vala
  *
  * Copyright (C) 2017 Yue
  *
@@ -17,7 +17,15 @@
  */
  
 namespace St {
-	class User:GLib.Object {
-	
+	class Account:GLib.Object {
+
+		private St.Schema schema;
+		public Account() {
+			schema = new St.Schema();
+		}
+		
+		public string default() {
+			return schema.get_active_user();
+		}
 	}
 }
