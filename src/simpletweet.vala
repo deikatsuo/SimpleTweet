@@ -23,7 +23,7 @@ namespace St {
 			window = new StWindow.GreetingWindow(this);
 			//window = new StWindow.MainWindow(this);
 			St.Schema schema = new St.Schema();
-			
+			schema.delete_user("hob");
 			window.show ();
 		}
  	}
