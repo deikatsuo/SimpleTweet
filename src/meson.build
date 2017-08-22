@@ -15,6 +15,7 @@ deps = [
 	dependency('gtk+-3.0'),
 	dependency('rest-0.7'),
 	dependency('gee-0.8'),
+	dependency('json-glib-1.0'),
 ]
 
 executable(

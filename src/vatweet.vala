@@ -19,31 +19,36 @@
 namespace St {
 	public class VaTweet:GLib.Object {
 		private Rest.OAuthProxy api;
-		private string token="";
-		private string token_secret="";
-		private string error="?";
 		private string req_token_url="";
+		private St.Schema schema;
+		
+		/*
+		 * Constructor
+		 */
+		public VaTweet() {
+			this.schema = new St.Schema ();
+			this.api = new Rest.OAuthProxy (
+				schema.get_consumer_key (),
+				schema.get_consumer_secret (),
+				"https://api.twitter.com/",
+				false
+			);
+		}
 		
 		/*
 		 * Request token
 		 * @return boolean
 		 */
 		public bool request_token() {
-			api = new Rest.OAuthProxy (
-				"bBOoFJDcJTceZy88fKHJcMnZh",
-				"It3xhlH2L46PcchsV4MAIeSlN46ajJI03RbO26wfbXQ75rm6bF",
-				"https://api.twitter.com/",
-				false
-			);
+			
 			try {
-				api.request_token ("oauth/request_token", "oob");
+				this.api.request_token ("oauth/request_token", "oob");
 			} catch (Error e) {
-				error = e.message;
+				new Alert(e.message, {"Ooops! Gagal request token"});
 				return false;
 			}
 			
-			token = api.get_token ();
-			req_token_url = "http://twitter.com/oauth/authorize?oauth_token="+token;
+			this.req_token_url = "http://twitter.com/oauth/authorize?oauth_token="+this.api.get_token ();
 			return true;
 		}
 		
@@ -52,7 +57,7 @@ namespace St {
 		 * @return token url
 		 */
 		public string get_token_url() {
-			return req_token_url;
+			return this.req_token_url;
 		}
 		
 		/*
@@ -62,10 +67,9 @@ namespace St {
 		 */
 		public bool access_token(string pin) {
 			try {
-				api.access_token ("oauth/access_token", pin);
-				token_secret = api.get_token_secret();
+				this.api.access_token ("oauth/access_token", pin);
 			} catch (Error e) {
-				new Alert(e.message, {"Ooops"});
+				new Alert(e.message, {"Ooops! Pin ditolak"});
 				return false;
 			}
 			return true;
@@ -76,7 +80,7 @@ namespace St {
 		 * @return string, token
 		 */
 		public string get_token() {
-			return token;
+			return this.api.get_token();
 		}
 		
 		/*
@@ -84,7 +88,7 @@ namespace St {
 		 * @return string, token secret
 		 */
 		public string get_token_secret() {
-			return token_secret;
+			return this.api.get_token_secret ();
 		}
 	}
 }

@@ -9,6 +9,7 @@
     <property name="default_width">500</property>
     <property name="default_height">250</property>
     <property name="show_menubar">False</property>
+    <signal name="destroy" handler="StWindowGreetingWindow_destroy_cb" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

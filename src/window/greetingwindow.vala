@@ -30,6 +30,7 @@ namespace StWindow {
 		
 		private St.VaTweet tweet;
 		private St.SimpleTweet app;
+		private St.Schema schema;
 		
 		/*
 		 * Constructor
@@ -37,15 +38,34 @@ namespace StWindow {
 		 */
 		public GreetingWindow(St.SimpleTweet app) {
 			this.app = app;
+			this.tweet = new St.VaTweet();
+		}
+		
+		/*
+		 * Reset window
+		 */
+		private void reset() {
+			Loading.hide();
+			RequestPinEntry.hide();
+			RequestPinEntry.text = "";
+			ConnectButton.hide();
+			RequestTokenButton.show();
 		}
 		
 		[GtkCallback]
-		private void RequestTokenButton_clicked_cb() {
+		private void StWindowGreetingWindow_destroy_cb () {
+			St.Account account = new St.Account();
+			if (account.default() == "") {
+				Gtk.main_quit();
+			}
+		}
+		
+		[GtkCallback]
+		private void RequestTokenButton_clicked_cb () {
 			RequestTokenButton.hide();
 			Loading.show();
 			Loading.active = true;
 			
-			tweet = new St.VaTweet();
 			if(tweet.request_token()) {
 				Loading.hide();
 				Loading.active = false;
@@ -61,17 +81,6 @@ namespace StWindow {
 			}
 		}
 		
-		/*
-		 * Reset window
-		 */
-		private void reset() {
-			Loading.hide();
-			RequestPinEntry.hide();
-			RequestPinEntry.text = "";
-			ConnectButton.hide();
-			RequestTokenButton.show();
-		}
-		
 		[GtkCallback]
 		private void ConnectButton_clicked_cb() {
 			RequestPinEntry.hide();
@@ -82,8 +91,9 @@ namespace StWindow {
 				Loading.active = false;
 				Loading.hide();
 
-				St.Schema save = new St.Schema();
-				save.set_token("dafuq",{tweet.get_token(), tweet.get_token_secret()});
+				schema = new St.Schema();
+				schema.set_token("__new__user__",{tweet.get_token(), tweet.get_token_secret()});
+				
 			}
 			reset();
 		}
